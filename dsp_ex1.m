@@ -1,0 +1,47 @@
+clear all
+clc 
+close all
+% first DSP lab simulation
+% Pendulum motion under friction
+% system parameter
+m = 0.1;
+L = 1;
+g = 10;
+b = 0.;
+ 
+% Algorithm 
+% Step by step solution
+ 
+h=0.01;
+% Initial Condition
+ 
+tht(1)=pi/20;
+tht(2)=tht(1);
+tme(1)=0;
+tme(2)=h;
+% Simulation time
+ 
+tmax=20;
+N=round(tmax/h);
+ 
+% Simulation loop
+d = 1+h*b/m;
+alf1 = 1+1/d;
+alf2 = -1/d;
+bta  = -g*h^2/(L*d);
+for n=3:N
+    tme(n)=(n-1)*h;
+    tht(n)=alf1*tht(n-1)+alf2*tht(n-2)+bta*(tht(n-1));
+end
+plot(tme,tht,'.','MarkerSize',10)
+title('Pendulum Simulation','FontSize',25)
+xlabel('time(s)','FontSize',18);
+ylabel('theta(rad)','FontSize',18);
+set(gca,'FontSize',20);
+grid on
+shg
+% Fourier Transform
+Ts=h;
+nv=[0:(length(tht)-1)]';
+wv=linspace(-pi,pi,200);
+nwv=wv*nv';
